@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BNWO Club Registration</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Cambria", Georgia, serif;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+        color: white;
+    }
+
+    header {
+        background-color: rgba(0,0,0,0.6);
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        font-weight: bold;
+    }
+
+    header a {
+        color: #00ffd5;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+
+    header a:hover {
+        color: #00ffaa;
+    }
+
+    .container {
+        max-width: 520px;
+        margin: 50px auto;
+        background-color: rgba(0,0,0,0.7);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #ffcc00;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    input[type="text"], input[type="email"], select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        background-color: rgba(255,255,255,0.1);
+        color: white;
+    }
+
+    input::placeholder, select option {
+        color: rgba(255,255,255,0.7);
+    }
+
+    select {
+        cursor: pointer;
+    }
+
+    .selected-country {
+        margin-top: 8px;
+        font-size: 14px;
+        font-style: italic;
+        color: #ffeb99;
+    }
+
+    .button-row {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 12px 18px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background-color: #ff9900;
+        color: black;
+    }
+
+    .btn:hover {
+        background-color: #e68a00;
+    }
+
+    .back-btn {
+        background-color: #00ffd5;
+        color: black;
+        text-decoration: none;
+        padding: 12px 18px;
+        border-radius: 6px;
+    }
+
+    .back-btn:hover {
+        background-color: #00ffaa;
+    }
+
+    .warning {
+        color: #ff4d4d;
+        font-weight: bold;
+        display: none;
+    }
+
+    #successContainer {
+        display: none;
+        margin-top: 20px;
+        padding: 15px;
+        background-color: rgba(0,255,213,0.1);
+        color: #00ffd5;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    #successContainer button {
+        margin: 8px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div>BNWO CLUB</div>
+    <a href="index.html">Home</a>
+</header>
+
+<div class="container">
+    <h1>REGISTER</h1>
+    <form id="registerForm">
+        <label for="phone">PHONE NUMBER</label>
+        <input type="text" id="phone" placeholder="Enter Phone Number" required>
+
+        <label for="email">EMAIL ADDRESS</label>
+        <input type="email" id="email" placeholder="Enter Email Address" required>
+
+        <label for="country">COUNTRY</label>
+        <select id="country" onchange="selectCountry()" required>
+            <option value="">-- Select Country --</option>
+            <option value="United Kingdom (UK)">United Kingdom</option>
+            <option value="United States (US)">United States</option>
+            <option value="Canada (CA)">Canada</option>
+            <option value="Australia (AU)">Australia</option>
+            <option value="Germany (DE)">Germany</option>
+        </select>
+        <div class="selected-country" id="selectedCountry">Selected: None</div>
+
+        <label for="id">ID NUMBER</label>
+        <input type="text" id="id" placeholder="Enter ID Number" required>
+
+        <label for="position">POSITION</label>
+        <input type="text" id="position" placeholder="Enter Position" required>
+
+        <label for="address">HOME ADDRESS</label>
+        <input type="text" id="address" placeholder="Enter Address" required>
+
+        <label for="plan">SELECT PLAN</label>
+        <select id="plan" required>
+            <option value="">-- Select Plan --</option>
+            <option value="Basic">MEMBERSHIP ID CARD $300</option>
+        </select>
+        <span id="payWarning" class="warning">You need to select a plan</span>
+
+        <div class="button-row">
+            <button type="button" class="btn btn-enter" onclick="submitForm()">Enter</button>
+            <a href="index.html" class="back-btn">← Back to Homepage</a>
+        </div>
+    </form>
+
+    <!-- Success & Payment Options -->
+    <div id="successContainer">
+        <h3>You need to pay before you can join BNWO CLUB</h3>
+        <p>Please choose your payment method:</p>
+        <button class="btn" onclick="pay('Credit Card')">Credit Card</button>
+        <button class="btn" onclick="pay('PayPal')">PayPal</button>
+    </div>
+</div>
+
+<script>
+function selectCountry() {
+    const countrySelect = document.getElementById("country");
+    const selected = countrySelect.options[countrySelect.selectedIndex].value;
+    document.getElementById("selectedCountry").innerText = selected 
+        ? `Selected: ${selected}` 
+        : "Selected: None";
+}
+
+function submitForm() {
+    const plan = document.getElementById("plan").value;
+    const warning = document.getElementById("payWarning");
+
+    if (!plan) {
+        warning.style.display = "inline";
+        return;
+    }
+
+    const form = document.getElementById("registerForm");
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // Hide form and show success/payment options
+    form.style.display = "none";
+    document.getElementById("successContainer").style.display = "block";
+}
+
+function pay(method) {
+    alert(`You selected ${method}. Redirecting to payment gateway...`);
+    // Simulate payment redirect
+    window.location.href = "payment.html";
+}
+</script>
+
+</body>
+</html>

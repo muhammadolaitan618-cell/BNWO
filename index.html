@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BNWO CLUB</title>
+<link rel="icon" href="bnow 2.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-color: #e9eef5;
+        --card-bg: rgba(255,255,255,0.75);
+        --text-color: #2b2b2b;
+        --btn-bg: #00a8c6;
+        --btn-hover: #007e8a;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Nunito", sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
+        transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        font-family: Orbitron, sans-serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: #007a99;
+    }
+
+    header img { width: 48px; margin-right: 10px; }
+    .header-buttons { display: flex; gap: 10px; align-items: center; }
+
+    .header-buttons .btn {
+        padding: 8px 12px;
+        font-size: 16px;
+        font-family: Orbitron;
+        font-weight: bold;
+        background: var(--btn-bg);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .header-buttons .btn:hover { background: var(--btn-hover); }
+
+    .container {
+        max-width: 95%;
+        margin: 25px auto;
+        padding: 25px;
+        background: var(--card-bg);
+        border-radius: 18px;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    }
+
+    h1 { text-align: center; font-family: Orbitron; color: #005f73; }
+
+    .info { text-align: center; font-size: 17px; margin: 15px auto; max-width: 750px; }
+
+    .card {
+        width: 100%; max-width: 350px; margin: 30px auto; padding: 15px;
+        background: white; border-radius: 15px; box-shadow: 0 0 18px rgba(0,200,255,0.15);
+    }
+
+    .card img { width: 100%; border-radius: 12px; }
+
+    .popup {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.55); display: none; justify-content: center; align-items: center;
+  
+    }
+
+    .popup-box {
+        width: 100%; max-width: 450px; background: #fff; padding: 25px; border-radius: 15px;
+        animation: fadeIn 0.3s ease;      padding: 20px 20px;
+    }
+
+    @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+
+    input { width: 100%; padding: 12px; margin-top: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; }
+
+    .close-btn { float: right; font-size: 22px; cursor: pointer; font-weight: bold; }
+    .fd{
+        width: 95%;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div style="display:flex; align-items:center;">
+        <img src="bnow 2.png"> BNWO CLUB
+    </div>
+    <div class="header-buttons" id="headerButtons">
+        <button class="btn" onclick="openRegister()">Register</button>
+        <button class="btn" onclick="openLogin()">Login</button>
+    </div>
+</header>
+
+<div class="container">
+    <h1>ABOUT US</h1>
+    <div class="info">
+        Welcome to BNWO CLUB. <br>
+        BNWO CLUB IS A SECRET MEETUP POINT WHERE WHITE SUBS MEET MULTIPLE BLACK KINGS FOR LONG TERM FUCK SESSIONS AND BREEDIN
+GANGBANG TAKE PLACE THERE IN THE BNWO CLUBS UNDISCLOSED TO WHO IS NOT A MEMBER..?
+    </div>
+
+    <div class="card">
+        <img src="preek7.jpg" alt="preview">
+        <a href="register.html"><button>JOIN CLUB NOW!</button></a>
+    </div>
+</div>
+
+<!-- REGISTER POPUP -->
+<div class="popup" id="registerPopup">
+    <div class="popup-box">
+        <span class="close-btn" onclick="closePopup('registerPopup')">×</span>
+        <h2 style="text-align:center;font-family:Orbitron;">Register</h2>
+        <input type="text" id="regUsername" placeholder="Username" class="fd">
+        <input type="email" id="regEmail" placeholder="Email"  class="fd">
+        <input type="password" id="regPassword" placeholder="Password"  class="fd">
+        <button class="btn" onclick="registerUser()">Create Account</button>
+    </div>
+</div>
+
+<!-- LOGIN POPUP -->
+<div class="popup" id="loginPopup">
+    <div class="popup-box">
+        <span class="close-btn" onclick="closePopup('loginPopup')">×</span>
+        <h2 style="text-align:center;font-family:Orbitron;">Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username"  class="fd">
+        <input type="password" id="loginPassword" placeholder="Password"  class="fd">
+        <button class="btn" onclick="loginUser()">Login</button>
+        <button class="btn" onclick="openReset()" style="background:#f0ad4e;">Forgot Password?</button>
+    </div>
+</div>
+
+<!-- RESET PASSWORD POPUP -->
+<div class="popup" id="resetPopup">
+    <div class="popup-box">
+        <span class="close-btn" onclick="closePopup('resetPopup')">×</span>
+        <h2 style="text-align:center;font-family:Orbitron;">Reset Password</h2>
+        <input type="text" id="resetUsername" placeholder="Username">
+        <input type="email" id="resetEmail" placeholder="Email">
+        <button class="btn" onclick="resetPassword()">Reset Password</button>
+    </div>
+</div>
+
+<script>
+/* POPUP CONTROLS */
+function openRegister(){ document.getElementById("registerPopup").style.display="flex"; }
+function openLogin(){ document.getElementById("loginPopup").style.display="flex"; }
+function openReset(){ document.getElementById("loginPopup").style.display="none"; document.getElementById("resetPopup").style.display="flex"; }
+function closePopup(id){ document.getElementById(id).style.display="none"; }
+
+/* REGISTER USER */
+function registerUser() {
+    let username = document.getElementById("regUsername").value.trim();
+    let email = document.getElementById("regEmail").value.trim();
+    let pass = document.getElementById("regPassword").value;
+
+    if(!username || !email || !pass) return alert("Please fill out all fields.");
+
+    if(localStorage.getItem("user_" + username)) return alert("Username taken.");
+
+    let user = { username, email, password: pass, verified: false };
+    localStorage.setItem("user_" + username, JSON.stringify(user));
+
+    alert("Account created! Check email for verification (simulated).");
+    closePopup("registerPopup");
+}
+
+/* LOGIN USER */
+function loginUser() {
+    let username = document.getElementById("loginUsername").value.trim();
+    let pass = document.getElementById("loginPassword").value;
+
+    let data = localStorage.getItem("user_" + username);
+    if(!data) return alert("Account not found.");
+
+    let user = JSON.parse(data);
+
+    if(user.password !== pass) return alert("Incorrect password.");
+
+    if(!user.verified) {
+        if(confirm("Your email is not verified. Simulate verification now?")) {
+            user.verified = true;
+            localStorage.setItem("user_" + username, JSON.stringify(user));
+            alert("Email verified!");
+        } else return;
+    }
+
+    localStorage.setItem("loggedInUser", username);
+    alert("Login successful!");
+    closePopup("loginPopup");
+    updateHeader();
+}
+
+/* LOGOUT */
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    alert("Logged out.");
+    updateHeader();
+}
+
+/* PASSWORD RESET */
+function resetPassword() {
+    let username = document.getElementById("resetUsername").value.trim();
+    let email = document.getElementById("resetEmail").value.trim();
+
+    let data = localStorage.getItem("user_" + username);
+    if(!data) return alert("Account not found.");
+
+    let user = JSON.parse(data);
+
+    if(user.email !== email) return alert("Email does not match.");
+
+    let newPass = prompt("Enter new password:");
+    if(!newPass) return alert("Password reset canceled.");
+
+    user.password = newPass;
+    localStorage.setItem("user_" + username, JSON.stringify(user));
+    alert("Password reset successful!");
+    closePopup("resetPopup");
+}
+
+/* HEADER UPDATE */
+function updateHeader() {
+    const headerButtons = document.getElementById("headerButtons");
+    const logged = localStorage.getItem("loggedInUser");
+
+    if(logged) {
+        headerButtons.innerHTML = `
+            <span style="font-family:Orbitron;font-weight:bold;">Hello, ${logged}</span>
+            <button class="btn" onclick="logout()">Logout</button>
+        `;
+    } else {
+        headerButtons.innerHTML = `
+            <button class="btn" onclick="openRegister()">Register</button>
+            <button class="btn" onclick="openLogin()">Login</button>
+        `;
+    }
+}
+
+updateHeader();
+</script>
+
+</body>
+</html>
